@@ -20,13 +20,13 @@ module.exports = (send) => {
           return callback(err)
         }
         if (Buffer.isBuffer(res)) {
-          callback(null, new Block(res))
+          Block.create(res, callback)
         } else {
           res.pipe(bl((err, data) => {
             if (err) {
               return callback(err)
             }
-            callback(null, new Block(data))
+            Block.create(data, callback)
           }))
         }
       })
@@ -67,7 +67,8 @@ module.exports = (send) => {
         if (err) {
           return callback(err)
         }
-        callback(null, new Block(block))
+
+        Block.create(block, callback)
       })
     })
   }
