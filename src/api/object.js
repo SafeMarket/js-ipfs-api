@@ -103,11 +103,17 @@ module.exports = (send) => {
           node = new DAGNode(obj.Data, obj.Links)
         }
 
-        if (node.toJSON().Hash !== result.Hash) {
-          return callback(new Error('Stored object was different from constructed object'))
-        }
+        node.toJSON((err, json) => {
+          if (err) {
+            return callback(err)
+          }
 
-        callback(null, node)
+          if (json.Hash !== result.Hash) {
+            return callback(new Error('Stored object was different from constructed object'))
+          }
+
+          callback(null, node)
+        })
       })
     }),
     data: promisify((multihash, options, callback) => {
@@ -202,11 +208,17 @@ module.exports = (send) => {
         }
         const node = new DAGNode()
 
-        if (node.toJSON().Hash !== result.Hash) {
-          return callback(new Error('Stored object was different from constructed object'))
-        }
+        node.toJSON((err, json) => {
+          if (err) {
+            return callback(err)
+          }
 
-        callback(null, node)
+          if (json.Hash !== result.Hash) {
+            return callback(new Error('Stored object was different from constructed object'))
+          }
+
+          callback(null, node)
+        })
       })
     }),
     patch: {
