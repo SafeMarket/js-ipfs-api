@@ -68,4 +68,10 @@ describe('.util', () => {
       done()
     })
   })
+
+  it('.hashFile', (done) => {
+    const fileHash = ipfs.util.hashFile('hello world')
+    expect(fileHash).to.equal('Qmf412jQZiuVUtdgnB36FXFX7xg5V6KEbSJ4dpQuhkLyfD')
+    done()
+  })
 })
